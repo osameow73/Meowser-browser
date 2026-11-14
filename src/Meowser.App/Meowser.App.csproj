@@ -13,6 +13,10 @@
     <Page Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\Meowser.ico" />
+    <Resource Include="Assets\Meowser.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Velopack" Version="1.2.0" />
     <ProjectReference Include="..\Meowser.Browser.Core\Meowser.Browser.Core.csproj" />
     <ProjectReference Include="..\Meowser.Browser.WebView2\Meowser.Browser.WebView2.csproj" />
