@@ -1,8 +1,8 @@
 # Meowser
 
-Meowser is a WPF desktop browser shell built on .NET 10 and Microsoft WebView2.
+Meowser is a lightweight desktop browser shell built on .NET 10 and Microsoft WebView2.
 
-The current browser UI includes a vertical navigation bar for bookmarks, history, downloads, themes and settings; independent top-positioned, reorderable tabs; a Meowser start page with quick search and frequent site shortcuts; ten curated color palettes; separate private windows; and an experimental music panel that reads WebView2 media metadata and exposes playback controls where supported by the site.
+The current browser UI includes a Meowser start page with quick search and frequent site shortcuts; ten curated color palettes; separate private windows; and an experimental music panel that reads WebView2 media metadata and exposes playback controls where supported by the site.
 
 ## Install Meowser
 
