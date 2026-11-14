@@ -12,7 +12,9 @@ public partial class App : Application
     public static void Main()
     {
         VelopackApp.Build().Run();
-        new App().Run();
+        var app = new App();
+        app.InitializeComponent();
+        app.Run();
     }
 
     public App()
