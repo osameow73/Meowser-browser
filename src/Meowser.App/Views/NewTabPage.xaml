@@ -1,0 +1,56 @@
+<UserControl x:Class="Meowser.App.Views.NewTabPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{DynamicResource PageBrush}">
+    <Grid Background="{DynamicResource PageBrush}">
+        <StackPanel Width="650" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                <TextBlock Text="🐾" FontSize="39" VerticalAlignment="Center" Margin="0,0,12,0" />
+                <TextBlock Text="Meowser" FontSize="43" FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" />
+            </StackPanel>
+            <TextBlock Text="Where would you like to go?" HorizontalAlignment="Center" FontSize="15"
+                       Foreground="{DynamicResource MutedBrush}" Margin="0,0,0,22" />
+            <Border Background="{DynamicResource InputBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1" CornerRadius="23" Padding="16,5" Margin="0,0,0,40">
+                <DockPanel>
+                    <TextBlock Text="⌕" FontSize="24" Foreground="{DynamicResource MutedBrush}"
+                               VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox x:Name="QuickSearchBox" BorderThickness="0" Background="Transparent"
+                             Padding="5,10" FontSize="15" VerticalContentAlignment="Center"
+                             ToolTip="Search or enter a web address" KeyDown="QuickSearchBox_KeyDown" />
+                </DockPanel>
+            </Border>
+            <TextBlock Text="Your frequent places" FontSize="14" FontWeight="SemiBold"
+                       Foreground="{DynamicResource MutedBrush}" HorizontalAlignment="Center" Margin="0,0,0,14" />
+            <ItemsControl x:Name="FrequentSitesPanel">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel HorizontalAlignment="Center" ItemWidth="126" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Click="FrequentSite_Click" Tag="{Binding}" Padding="8" Margin="4" ToolTip="{Binding Url}">
+                            <StackPanel Width="106" HorizontalAlignment="Center">
+                                <Border Width="48" Height="48" CornerRadius="16" Background="{DynamicResource SurfaceBrush}"
+                                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding Monogram}" FontSize="17" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Border>
+                                <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" TextAlignment="Center"
+                                           Foreground="{DynamicResource TextBrush}" FontSize="12" Margin="0,8,0,0" />
+                                <TextBlock Text="{Binding Host}" TextTrimming="CharacterEllipsis" TextAlignment="Center"
+                                           Foreground="{DynamicResource MutedBrush}" FontSize="10" Margin="0,2,0,0" />
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock x:Name="EmptySitesMessage" Text="Your most visited websites will show up here."
+                       Visibility="Collapsed" HorizontalAlignment="Center" Foreground="{DynamicResource MutedBrush}"
+                       FontSize="12" Margin="0,12,0,0" />
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,30 @@
+name: Build and publish Meowser release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  windows-release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Install Velopack CLI
+        run: dotnet tool install vpk --version 1.2.0 --tool-path .tools
+      - name: Read release version
+        shell: powershell
+        run: |
+          $version = $env:GITHUB_REF_NAME.TrimStart('v')
+          "MEOWSER_VERSION=$version" >> $env:GITHUB_ENV
+      - name: Publish self-contained app
+        run: dotnet publish src/Meowser.App/Meowser.App.csproj -c Release -r win-x64 --self-contained true -p:Version=${{ env.MEOWSER_VERSION }} -p:PublishSingleFile=false -o publish/win-x64
+      - name: Package installer and updates
+        run: .tools/vpk.exe pack --packId Meowser --packVersion ${{ env.MEOWSER_VERSION }} --packDir publish/win-x64 --mainExe Meowser.exe --packTitle Meowser --packAuthors Meowser --icon src/Meowser.App/Assets/Meowser.ico --framework webview2 --runtime win-x64 --outputDir Releases
+      - name: Publish GitHub release and update feed
+        run: .tools/vpk.exe upload github --outputDir Releases --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GITHUB_TOKEN }} --publish --tag ${{ github.ref_name }} --releaseName "Meowser ${{ github.ref_name }}"

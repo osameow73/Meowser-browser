@@ -1,0 +1,209 @@
+<Window x:Class="Meowser.App.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Meowser" Width="1360" Height="860" MinWidth="900" MinHeight="580"
+        Icon="pack://application:,,,/Assets/Meowser.ico"
+        WindowStyle="None" ResizeMode="CanResize" StateChanged="Window_StateChanged"
+        Background="{DynamicResource PageBrush}" Foreground="{DynamicResource TextBrush}"
+        PreviewKeyDown="Window_PreviewKeyDown" Loaded="Window_Loaded" ContentRendered="Window_ContentRendered">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="42" ResizeBorderThickness="6" GlassFrameThickness="0"
+                            UseAeroCaptionButtons="False" />
+    </shell:WindowChrome.WindowChrome>
+    <DockPanel LastChildFill="True">
+        <Border x:Name="BrowserChrome" DockPanel.Dock="Top" Background="{DynamicResource ChromeBrush}" Padding="10,6,10,4"
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="2" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="0,0,0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="164" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                MouseLeftButtonDown="WindowDragArea_MouseLeftButtonDown">
+                        <TextBlock Text="🐾" FontSize="19" VerticalAlignment="Center" Margin="2,0,8,0" />
+                        <TextBlock Text="Meowser" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" />
+                        <Border x:Name="PrivateIndicator" Visibility="Collapsed" Background="{DynamicResource AccentBrush}"
+                                CornerRadius="8" Padding="7,3" Margin="8,0,0,0">
+                            <TextBlock Text="Private" FontSize="10" Foreground="White" />
+                        </Border>
+                    </StackPanel>
+                    <TabControl Grid.Column="1" x:Name="BrowserTabs" HorizontalAlignment="Left"
+                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                SelectionChanged="BrowserTabs_SelectionChanged"
+                                AllowDrop="True" PreviewMouseLeftButtonDown="BrowserTabs_PreviewMouseLeftButtonDown"
+                                PreviewMouseMove="BrowserTabs_PreviewMouseMove" Drop="BrowserTabs_Drop">
+                        <TabControl.ItemContainerStyle>
+                            <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                                <Setter Property="Visibility" Value="{Binding TabVisibility}" />
+                            </Style>
+                        </TabControl.ItemContainerStyle>
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Title}" MaxWidth="180" TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center" />
+                                    <Button Content="×" FontSize="13" Padding="5,0" Margin="7,0,0,0"
+                                            ToolTip="Close tab" Click="CloseTab_Click" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                    </TabControl>
+                    <Button Grid.Column="2" Content="+" FontSize="18" Padding="8,3" Margin="5,1,0,1"
+                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                            ToolTip="New tab (Ctrl+T)" Click="NewTab_Click" />
+                    <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right"
+                                VerticalAlignment="Top" shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Button Content="⛶" Width="38" Height="30" Padding="4" ToolTip="Toggle fullscreen (F11)"
+                                Click="Fullscreen_Click" />
+                        <Button Content="─" Width="38" Height="30" Padding="4" ToolTip="Minimize"
+                                Click="Minimize_Click" />
+                        <Button x:Name="MaximizeButton" Content="□" Width="38" Height="30" Padding="4"
+                                ToolTip="Maximize" Click="Maximize_Click" />
+                        <Button Content="×" Width="38" Height="30" Padding="4" ToolTip="Close"
+                                Click="CloseWindow_Click" />
+                    </StackPanel>
+                </Grid>
+                <DockPanel Grid.Row="1" LastChildFill="True" Margin="0,3,0,5">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="BackButton" Content="‹" ToolTip="Back (Alt+Left)" Click="Back_Click" />
+                        <Button x:Name="ForwardButton" Content="›" ToolTip="Forward (Alt+Right)" Click="Forward_Click" />
+                        <Button Content="⟳" ToolTip="Reload (F5)" Click="Reload_Click" />
+                        <Button x:Name="BookmarkButton" Content="☆" ToolTip="Bookmark this page (Ctrl+D)" Click="BookmarkCurrent_Click" />
+                    </StackPanel>
+                    <Border Background="{DynamicResource InputBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1" CornerRadius="15" Padding="13,3" VerticalAlignment="Center">
+                        <TextBox x:Name="AddressBox" BorderThickness="0" Background="Transparent" FontSize="14"
+                                 VerticalContentAlignment="Center" KeyDown="AddressBox_KeyDown"
+                                 ToolTip="Enter a web address or search" />
+                    </Border>
+                </DockPanel>
+                <ProgressBar x:Name="LoadingIndicator" Grid.Row="2" Height="2" IsIndeterminate="True"
+                             Visibility="Collapsed" Foreground="{DynamicResource AccentBrush}"
+                             Background="Transparent" BorderThickness="0" />
+            </Grid>
+        </Border>
+        <Border x:Name="StatusBar" DockPanel.Dock="Bottom" Background="{DynamicResource ChromeBrush}" Padding="14,6">
+            <TextBlock x:Name="StatusText" Text="Starting Meowser…" FontSize="11" Foreground="{DynamicResource MutedBrush}" />
+        </Border>
+        <DockPanel LastChildFill="True">
+            <Border x:Name="SidebarRail" DockPanel.Dock="Left" Width="174" Background="{DynamicResource SidebarBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0" Padding="10,12,10,20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel>
+                        <Button Content="▣   Bookmarks" HorizontalContentAlignment="Left" Click="OpenBookmarks_Click" />
+                        <Button Content="◷   History" HorizontalContentAlignment="Left" Click="OpenHistory_Click" />
+                        <Button Content="⇩   Downloads" HorizontalContentAlignment="Left" Click="OpenDownloads_Click" />
+                        <Separator Margin="8,10" Background="{DynamicResource BorderBrush}" />
+                        <Button Content="◐   Themes" HorizontalContentAlignment="Left" Click="OpenThemes_Click" />
+                        <Button Content="⚙   Settings" HorizontalContentAlignment="Left" Click="OpenSettings_Click" />
+                        <Button x:Name="NowPlayingButton" Content="Now playing" Visibility="Collapsed"
+                                HorizontalContentAlignment="Left" Click="ShowMusicWidget_Click" />
+                        <Border x:Name="MusicWidget" Visibility="Collapsed" Background="{DynamicResource SurfaceBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="16"
+                                Padding="12" Margin="2,14,2,6">
+                            <StackPanel>
+                                <DockPanel>
+                                    <Button DockPanel.Dock="Right" Content="×" Padding="5,1" Margin="0,-5,-5,0"
+                                            ToolTip="Hide music player (playback continues)" Click="DismissMusicWidget_Click" />
+                                    <TextBlock x:Name="MusicSourceText" Text="Website" FontSize="12" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource MutedBrush}" TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center" />
+                                </DockPanel>
+                                <TextBlock x:Name="MusicCollectionText" FontSize="10" Foreground="{DynamicResource MutedBrush}"
+                                           TextTrimming="CharacterEllipsis" Margin="0,1,0,8" />
+                                <Border Height="210" CornerRadius="12" ClipToBounds="True" Background="{DynamicResource PageBrush}"
+                                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                                    <Grid>
+                                        <Image x:Name="MusicArtwork" Stretch="UniformToFill" />
+                                        <TextBlock x:Name="MusicArtworkFallback" Text="♫" FontSize="52"
+                                                   Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+                                <TextBlock x:Name="MusicTrackText" FontSize="15" FontWeight="Bold" Margin="0,10,0,1"
+                                           TextTrimming="CharacterEllipsis" />
+                                <TextBlock x:Name="MusicArtistText" FontSize="12" Foreground="{DynamicResource MutedBrush}"
+                                           TextTrimming="CharacterEllipsis" />
+                                <Slider x:Name="MusicPositionSlider" Minimum="0" Maximum="1" Value="0" Margin="-5,6,-5,0"
+                                        ValueChanged="MusicPositionSlider_ValueChanged"
+                                        PreviewMouseLeftButtonDown="MusicPositionSlider_MouseDown"
+                                        PreviewMouseLeftButtonUp="MusicPositionSlider_MouseUp" />
+                                <DockPanel Margin="0,-4,0,4">
+                                    <TextBlock x:Name="MusicCurrentTimeText" Text="0:00" FontSize="10" DockPanel.Dock="Left" />
+                                </DockPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,3">
+                                    <Button Content="|◀" FontSize="15" ToolTip="Previous track (or rewind)" Click="MusicPrevious_Click" />
+                                    <Button x:Name="MusicPlayPauseButton" Content="▶" FontSize="19" Padding="13,6"
+                                            ToolTip="Play or pause" Click="MusicPlayPause_Click" />
+                                    <Button Content="▶|" FontSize="15" ToolTip="Next track (or skip forward)" Click="MusicNext_Click" />
+                                </StackPanel>
+                                <DockPanel Margin="2,0,2,6">
+                                    <TextBlock Text="◖" FontSize="14" DockPanel.Dock="Left" VerticalAlignment="Center" />
+                                    <TextBlock Text="◗" FontSize="14" DockPanel.Dock="Right" VerticalAlignment="Center" />
+                                    <Slider x:Name="MusicVolumeSlider" Minimum="0" Maximum="1" Value="1" Margin="5,0"
+                                            ValueChanged="MusicVolumeSlider_ValueChanged" />
+                                </DockPanel>
+                                <Button Content="Go To Website" HorizontalContentAlignment="Center" Padding="8,8"
+                                        Click="GoToMusicWebsite_Click" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    </ScrollViewer>
+                    <Button Grid.Row="1" Content="◉   Incognito mode" HorizontalContentAlignment="Left"
+                            VerticalAlignment="Bottom" MinHeight="44" Margin="0,8,0,0"
+                            Click="OpenPrivateWindow_Click" ToolTip="Open a separate private browsing window" />
+                </Grid>
+            </Border>
+            <Grid x:Name="MainContentRegion" Background="{DynamicResource PageBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="SidebarColumn" Width="0" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="SidebarPanel" Grid.Column="0" Visibility="Collapsed" Background="{DynamicResource SurfaceBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0" Padding="14">
+                    <DockPanel LastChildFill="True">
+                        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+                            <Button DockPanel.Dock="Right" Content="×" Padding="7,3" Click="CloseSidebar_Click" />
+                            <TextBlock x:Name="SidebarTitle" Text="Bookmarks" FontSize="17" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" />
+                        </DockPanel>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="SidebarContent" />
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+                <Grid Grid.Column="1" Margin="12,8,12,12">
+                    <ContentControl x:Name="ActiveTabContent" />
+                    <ContentControl x:Name="BackgroundMusicHost" Visibility="Collapsed"
+                                    IsHitTestVisible="False" Focusable="False" Width="1" Height="1"
+                                    HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Border x:Name="BrowserUnavailablePanel" Visibility="Collapsed" Background="{DynamicResource SurfaceBrush}"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" Padding="30" CornerRadius="18"
+                            BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" MaxWidth="520">
+                        <StackPanel>
+                            <TextBlock Text="Meowser needs its web engine" FontSize="22" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextBrush}" Margin="0,0,0,10" />
+                            <TextBlock Text="Install or repair the Microsoft Edge WebView2 Runtime, then restart Meowser."
+                                       Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap" FontSize="14" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+        </DockPanel>
+    </DockPanel>
+</Window>

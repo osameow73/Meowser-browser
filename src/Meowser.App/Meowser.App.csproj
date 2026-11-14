@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <StartupObject>Meowser.App.App</StartupObject>
+    <Version>1.0.0</Version>
+    <ApplicationIcon>Assets\Meowser.ico</ApplicationIcon>
+    <AssemblyName>Meowser</AssemblyName>
+    <RootNamespace>Meowser.App</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Remove="App.xaml" />
+    <Page Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Velopack" Version="1.2.0" />
+    <ProjectReference Include="..\Meowser.Browser.Core\Meowser.Browser.Core.csproj" />
+    <ProjectReference Include="..\Meowser.Browser.WebView2\Meowser.Browser.WebView2.csproj" />
+    <ProjectReference Include="..\Meowser.Data.Sqlite\Meowser.Data.Sqlite.csproj" />
+  </ItemGroup>
+</Project>

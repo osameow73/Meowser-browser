@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+outputs/
+work/
+*.db
+*.db-shm
+*.db-wal
+*.log
+work/dotnet/
+work/dotnet-install.ps1

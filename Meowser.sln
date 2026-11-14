@@ -1,0 +1,48 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meowser.Browser.Core", "src\Meowser.Browser.Core\Meowser.Browser.Core.csproj", "{3F8501CA-8D92-43BA-A721-45F085FB204B}"
+EndProject
+Project("{60DC8134-EBA5-43B8-BCC9-BB4BC16C2548}") = "Meowser.Browser.WebView2", "src\Meowser.Browser.WebView2\Meowser.Browser.WebView2.csproj", "{A5D2640B-006D-4B16-A364-B0E3FE880614}"
+EndProject
+Project("{60DC8134-EBA5-43B8-BCC9-BB4BC16C2548}") = "Meowser.App", "src\Meowser.App\Meowser.App.csproj", "{C23C66D3-E7F2-4849-9AA4-7D3E17F339F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meowser.Browser.Core.Tests", "tests\Meowser.Browser.Core.Tests\Meowser.Browser.Core.Tests.csproj", "{B7C97FC7-0E28-4ED4-A6AA-9E6215D79A4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meowser.Data.Sqlite", "src\Meowser.Data.Sqlite\Meowser.Data.Sqlite.csproj", "{6A6B62DF-06E9-40BB-9138-58A990AD07E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meowser.Data.Sqlite.Tests", "tests\Meowser.Data.Sqlite.Tests\Meowser.Data.Sqlite.Tests.csproj", "{F7A62E08-AAD4-494E-80A9-5DA341C38656}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F8501CA-8D92-43BA-A721-45F085FB204B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F8501CA-8D92-43BA-A721-45F085FB204B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F8501CA-8D92-43BA-A721-45F085FB204B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F8501CA-8D92-43BA-A721-45F085FB204B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5D2640B-006D-4B16-A364-B0E3FE880614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5D2640B-006D-4B16-A364-B0E3FE880614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5D2640B-006D-4B16-A364-B0E3FE880614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5D2640B-006D-4B16-A364-B0E3FE880614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C23C66D3-E7F2-4849-9AA4-7D3E17F339F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C23C66D3-E7F2-4849-9AA4-7D3E17F339F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C23C66D3-E7F2-4849-9AA4-7D3E17F339F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C23C66D3-E7F2-4849-9AA4-7D3E17F339F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7C97FC7-0E28-4ED4-A6AA-9E6215D79A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C97FC7-0E28-4ED4-A6AA-9E6215D79A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7C97FC7-0E28-4ED4-A6AA-9E6215D79A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C97FC7-0E28-4ED4-A6AA-9E6215D79A4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6B62DF-06E9-40BB-9138-58A990AD07E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6B62DF-06E9-40BB-9138-58A990AD07E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6B62DF-06E9-40BB-9138-58A990AD07E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6B62DF-06E9-40BB-9138-58A990AD07E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A62E08-AAD4-494E-80A9-5DA341C38656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A62E08-AAD4-494E-80A9-5DA341C38656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A62E08-AAD4-494E-80A9-5DA341C38656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A62E08-AAD4-494E-80A9-5DA341C38656}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
